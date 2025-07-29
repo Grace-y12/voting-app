@@ -54,6 +54,7 @@ Go to http://127.0.0.1:8000/ in your browser.
 
 🧪 Committee Member Login
 Committee members must log in using their username and RSA key pair. Access to the admin dashboard is only granted when all three members have successfully authenticated.
+##
 
 ## 📌 Technologies Used
 1. Django (Python)
