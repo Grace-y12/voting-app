@@ -29,34 +29,34 @@ voting_app/
 
 ## ⚙️ Installation
 
-### 1. Clone the Repository
+ 1. Clone the Repository
 ```bash
 git clone https://github.com/Grace-y12/voting-app.git
 cd voting-app
 
-###  2. Create a Virtual Environment
+  2. Create a Virtual Environment
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-### 3. Install Dependencies
+   3. Install Dependencies
 pip install -r requirements.txt
 
-### 4. Apply Migrations
+   4. Apply Migrations
 python manage.py makemigrations
 python manage.py migrate
 
-### 5. Run the Server
+  5. Run the Server
 python manage.py runserver
 
-### 6. Open in Browser
+ 6. Open in Browser
 Go to http://127.0.0.1:8000/ in your browser.
 
 🧪 Committee Member Login
 Committee members must log in using their username and RSA key pair. Access to the admin dashboard is only granted when all three members have successfully authenticated.
-##
 
-## 📌 Technologies Used
+## Developer
+
 1. Django (Python)
 
 2.SQLite
