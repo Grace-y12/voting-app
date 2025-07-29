@@ -1,0 +1,18 @@
+Django>=4.2,<5.0
+rsa>=4.9
+dlib>=19.24.0; #platform_system!="Windows"
+face-recognition>=1.3.0; #platform_system!="Windows"
+numpy>=1.24.0
+opencv-python>=4.7.0.72
+Pillow>=10.0.0
+
+# ##⚠️ Notes:
+# rsa is for key encryption/decryption of committee members.
+
+# dlib and face-recognition are optional and should only be included if you're using facial recognition. They're excluded on Windows in the file above using a condition (platform_system!="Windows"), since dlib often causes installation issues there.
+
+# opencv-python is needed for image capture and webcam-based verification.
+
+# Pillow is used for image handling if you’re saving/processing user images.
+
+# Make sure to install cmake and dlib manually on Windows if needed, or remove them from the list if not using facial recognition
