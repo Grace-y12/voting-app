@@ -1,0 +1,9 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h2>Vote Tally Results</h2>
+  <ul>
+    {% for candidate, count in vote_counts.items %}
+      <li>{{ candidate }}: {{ count }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

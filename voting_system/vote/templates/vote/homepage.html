@@ -1,0 +1,40 @@
+{% load static %}
+<div style="width: 1440px; height: 1024px; position: relative; background: #06040D; overflow: hidden">
+  <img style="width: 674px; height: 1024px; left: 0px; top: 0px; position: absolute" src="{% static 'images/unsplash_LA1VawaCjjI.png' %}"/>
+
+  <!-- Admin (Register) Button -->
+  <a href="{% url 'committee_register' %}" style="text-decoration: none;">
+    <div style="width: 269px; padding: 10px; left: 20px; top: 11px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
+      <div style="align-self: stretch; padding: 10px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex">
+        <div style="align-self: stretch; height: 68px; padding-left: 41px; padding-right: 41px; padding-top: 14px; padding-bottom: 14px; background: #3964F1; border-radius: 40px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+          <div style="color: white; font-size: 32px; font-family: Inter; font-weight: 700; word-wrap: break-word">Admin</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- Login Button -->
+  <a href="{% url 'login' %}" style="text-decoration: none;">
+    <div style="width: 269px; padding: 10px; left: 1171px; top: 11px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
+      <div style="align-self: stretch; padding: 10px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 10px; display: flex">
+        <div style="align-self: stretch; height: 68px; padding-left: 41px; padding-right: 41px; padding-top: 14px; padding-bottom: 14px; background: #3964F1; border-radius: 40px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+          <div style="color: white; font-size: 32px; font-family: Inter; font-weight: 700; word-wrap: break-word">Login</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <!-- Tagline -->
+  <div style="left: 806px; top: 386px; position: absolute; color: white; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">Make your choice and</div>
+  <div style="left: 744px; top: 454px; position: absolute; color: #3964F1; font-size: 96px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">Vote Today</div>
+
+  <!-- Register Button -->
+  <a href="{% url 'register' %}" style="text-decoration: none;">
+    <div style="width: 298px; height: 91px; padding-left: 35px; padding-right: 35px; padding-top: 9px; padding-bottom: 9px; left: 862px; top: 637px; position: absolute; background: #3964F1; border-radius: 40px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
+      <div style="color: white; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">Register</div>
+    </div>
+  </a>
+
+  <!-- Helpline -->
+  <div style="left: 1121px; top: 950px; position: absolute; color: white; font-size: 40px; font-family: Inter; font-weight: 700; word-wrap: break-word">Helpline: 4531</div>
+</div>

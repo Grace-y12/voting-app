@@ -1,0 +1,8 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h2>Verify Committee Signatures to Tally Votes</h2>
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Verify and Tally</button>
+  </form>
+{% endblock %}

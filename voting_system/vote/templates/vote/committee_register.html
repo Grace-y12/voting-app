@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Committee Member Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.3rem;
+            margin-top: 1rem;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #0066cc;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            margin-top: 1.2rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005bb5;
+        }
+
+        .admin-button {
+            background-color: #555;
+            margin-top: 0.6rem;
+        }
+
+        .admin-button:hover {
+            background-color: #333;
+        }
+
+        .messages {
+            margin-top: 1rem;
+            color: red;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .messages li {
+            margin-bottom: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Committee Member Registration</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+
+            <label for="id_password">Password:</label>
+            {{ form.password }}
+
+            <button type="submit">Register</button>
+        </form>
+
+        <form action="/admin/">
+            <button type="submit" class="admin-button">Go to Admin Login</button>
+        </form>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

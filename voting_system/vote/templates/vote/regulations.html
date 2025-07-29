@@ -1,0 +1,83 @@
+{% load static %}
+<div style="width: 1440px; height: 1024px; position: relative; background: #06040D; overflow: hidden">
+    <!-- Background Shapes -->
+    <div style="width: 653px; height: 276px; left: -178px; top: -217px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 351px; height: 254px; left: 369px; top: -195px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 297px; height: 118px; left: 689px; top: -59px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 678px; height: 349px; left: 904px; top: -259px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+
+    <!-- Header -->
+    <div style="width: 1364px; left: 10px; top: 102px; position: absolute; justify-content: space-between; align-items: center; display: inline-flex">
+        <img style="width: 60px; height: 62px; background: #D9D9D9; border-radius: 9999px" src="{% static 'images/Ellipse 5.png' %}" />
+        <div style="justify-content: flex-start; align-items: center; gap: 75px; display: flex">
+            <div style="color: white; font-size: 36px; font-family: Inter; font-weight: 700;">Regulations</div>
+            <div style="color: white; font-size: 36px; font-family: Inter; font-weight: 700;">Vote</div>
+        </div>
+    </div>
+
+    <!-- Instruction Box Border -->
+    <div style="width: 979px; height: 557px; left: 273px; top: 262px; position: absolute; border: 3px #015FC7 solid"></div>
+
+    <!-- Instruction Texts -->
+    <div style="left: 269px; top: 221px; position: absolute; color: black; font-size: 22px; font-family: Tienne; font-weight: 700;">
+        This election is being conducted by the election commission of India.
+    </div>
+    <div style="left: 292px; top: 271px; position: absolute; color: white; font-size: 22px; font-family: Inter; font-weight: 400;">
+        You, as being a member of the constituency under the constituencies of Harare<br/>
+        State Election, are allowed to vote. Please take the following steps in order to cast a <br/>
+        valid vote. You are requested to cast vote on your own decision and not by being <br/>
+        pressurized or terrorized by someone. If someone threatens you for making a voting<br/>
+        decision please contact the given helpline numbers.<br/><br/>
+        Steps - <br/>
+        You are allowed to make only one vote per election.<br/>
+        You are allowed to choose only one candidate per election.<br/>
+        Candidates information are available on the page.<br/>
+        Make sure that you are selecting your wanted candidate by confirming the name<br/>
+        and symbol on the screen.<br/>
+        After selecting the candidates make sure to submit the vote.<br/>
+        Result will be announced after 5 days of election being completed.<br/>
+        You can verify your vote after the election results are announced.
+    </div>
+
+    <!-- Checkbox and Label -->
+    <input type="checkbox" id="consentCheckbox" style="width: 23px; height: 21px; left: 279px; top: 833px; position: absolute;" onchange="toggleProceedButton()" />
+    <div style="left: 317px; top: 828px; position: absolute; color: white; font-size: 21px; font-family: Inter;">
+        I understand and will follow above steps.
+    </div>
+
+    <!-- Buttons -->
+    <div style="left: 738px; top: 883px; position: absolute; display: flex; gap: 114px;">
+        <!-- CANCEL Button -->
+        <a href="{% url 'login' %}">
+            <div style="width: 200px; height: 50px; background: #3964F1; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                <div style="color: white; font-size: 32px; font-family: Inter;">CANCEL</div>
+            </div>
+        </a>
+
+        <!-- PROCEED Button -->
+        <a href="{% url 'voting' %}" id="proceedLink">
+            <div id="proceedButton" style="width: 200px; height: 50px; background: #3964F1; display: flex; align-items: center; justify-content: center; cursor: not-allowed; opacity: 0.5; pointer-events: none;">
+                <div style="color: white; font-size: 32px; font-family: Inter;">PROCEED</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- JS Logic to Enable Button -->
+<script>
+    function toggleProceedButton() {
+        const checkbox = document.getElementById("consentCheckbox");
+        const proceedButton = document.getElementById("proceedButton");
+        const proceedLink = document.getElementById("proceedLink");
+
+        if (checkbox.checked) {
+            proceedButton.style.pointerEvents = "auto";
+            proceedButton.style.opacity = "1";
+            proceedButton.style.cursor = "pointer";
+        } else {
+            proceedButton.style.pointerEvents = "none";
+            proceedButton.style.opacity = "0.5";
+            proceedButton.style.cursor = "not-allowed";
+        }
+    }
+</script>

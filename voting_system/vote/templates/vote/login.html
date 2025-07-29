@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Face Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #06040D;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login with Face Recognition</h2>
+    <form id="login-form" method = "POST">
+        {% csrf_token %}
+        <input type="text" id="id_number" name="id_number" placeholder="ID Number" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+
+        <div class="camera-container">
+            <video id="video" width="100%" height="auto" autoplay></video>
+            <button type="button" id="capture-button">Capture Face</button>
+            <canvas id="canvas" width="300" height="200"></canvas>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+    <div id="message"></div>
+</div>
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture-button');
+    const loginForm = document.getElementById('login-form');
+    const messageDiv = document.getElementById('message');
+
+    let capturedImage = null;
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => video.srcObject = stream)
+        .catch(err => {
+            console.log("Error accessing your camera");
+            messageDiv.innerText = "Error accessing your camera";
+        });
+
+    captureButton.addEventListener('click', () => {
+        if (!video.srcObject) {
+            messageDiv.innerText = "Please allow access to your camera";
+            return;
+        }
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        capturedImage = canvas.toDataURL("image/jpeg");
+        messageDiv.innerText = "Face captured successfully!";
+    });
+
+    loginForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    if (!capturedImage) {
+        messageDiv.innerText = "Please capture a face first";
+        return;
+    }
+
+    const formData = new FormData(loginForm);
+    formData.append('id_number', document.getElementById('id_number').value);
+    formData.append('password', document.getElementById('password').value);
+    formData.append('face_image', capturedImage);
+
+    const response = await fetch('/login/', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        window.location.href = '/voting/';
+    } else if (data.error) {
+        messageDiv.innerText = data.error;
+    } else {
+        messageDiv.innerText = "Login failed.";
+    }
+}
+</script>
+
+</body>
+</html>

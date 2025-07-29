@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register-Face Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #06040D;
+            margin: 0;
+            padding: 0;
+        }
+        .register-container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Register with Face Recognition</h2>
+        <form id="register-form">
+            <input type="text" id="id_number" name="id_number" placeholder="ID Number" required>
+            <input type="text" id="password" name="password" placeholder="Password" required>
+
+            <div class="camera-container">
+                <video id="video" width="100%" height="auto" autoplay></video>
+                <button type="button" id="capture-button">Capture Face</button>
+                <canvas id="canvas" width="300" height="200"></canvas>
+            </div>
+
+            <button type="submit">Register</button>
+
+        </form>
+        <div id="messsage"></div>
+
+    </div>
+
+    <script>
+        const video = document.getElementById('video')
+        const canvas = document.getElementById('canvas')
+        const captureButton = document.getElementById('capture-button')
+        const registerForm = document.getElementById('register-form')
+        const messageDiv = document.getElementById('messsage')
+
+        let capturedImage = null
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream
+            }).catch(err => {
+                console.log("Error accessing your camera")
+                messageDiv.innerHTML = "Error accessing your camera"
+            })
+
+            captureButton.addEventListener('click', () => {
+                if(!video.srcObject) {
+                    messageDiv.innerHTML = "Please allow access to your camera"
+                    return
+                }
+                const context = canvas.getContext("2d")
+                context.drawImage(video, 0, 0, canvas.width, canvas.height)
+                capturedImage = canvas.toDataURL("image/jpeg");
+                messageDiv.innerHTML = "Face captured successfully!"
+            })
+
+            registerForm.onsubmit = async (e) => {
+                e.preventDefault()
+
+                if(!capturedImage){
+                    messageDiv.innerHTML = "Please capture a face first"
+                    return
+                }
+
+                const formData = new FormData(registerForm)
+                formData.append('face_image', capturedImage)
+                const response = await fetch ('/register/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                messageDiv.innerText = data.mediaDevices || 'Registration Failed';
+                
+                if (data.success) {
+                      messageDiv.innerText = data.success;
+                } else if (data.error) {
+                      messageDiv.innerText = data.error;
+         }
+            }
+    </script>
+    
+
+
+
+</body>
+</html>

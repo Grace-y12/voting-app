@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting Panel</title>
+    <style>
+        /* Popup Styles */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup-content h2 {
+            color: #3964F1;
+            font-family: Inter;
+        }
+
+        .popup-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3964F1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 1440px; height: 1024px; position: relative; background: #06040D; overflow: hidden;">
+
+    <!-- Decorative Circles -->
+    <div style="width: 653px; height: 276px; left: -178px; top: -217px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 351px; height: 254px; left: 369px; top: -195px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 297px; height: 118px; left: 689px; top: -59px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+    <div style="width: 678px; height: 349px; left: 904px; top: -259px; position: absolute; background: #3964F1; border-radius: 9999px"></div>
+
+    <!-- Header -->
+    <div style="width: 1156px; height: 85px; left: 149px; top: 183px; position: absolute; background: white"></div>
+    <div style="left: 149px; top: 106px; position: absolute; color: white; font-size: 64px; font-family: Inter; font-style: italic; font-weight: 700;">Voting Panel</div>
+
+    <!-- Candidate 1 -->
+    <input type="radio" name="candidate" value="Sam Jones from Independent" onchange="updateSelectedCandidate()" style="position: absolute; left: 160px; top: 212px; z-index: 10;" />
+    <div style="left: 288px; top: 203px; position: absolute; color: black; font-size: 36px; font-family: Inter;">Sam Jones</div>
+    <div style="left: 623px; top: 203px; position: absolute; color: black; font-size: 36px; font-family: Inter;">Independent</div>
+    <img style="width: 73px; height: 57px; left: 1030px; top: 197px; position: absolute" src="{% static 'images/star.png' %}" />
+
+    <!-- Candidate 2 -->
+    <div style="width: 1156px; height: 85px; left: 153px; top: 381px; position: absolute; background: white"></div>
+    <input type="radio" name="candidate" value="Joana Raya from GWS" onchange="updateSelectedCandidate()" style="position: absolute; left: 160px; top: 412px; z-index: 10;" />
+    <div style="left: 280px; top: 396px; position: absolute; color: black; font-size: 36px; font-family: Inter;">Joana Raya</div>
+    <div style="left: 689px; top: 402px; position: absolute; color: black; font-size: 36px; font-family: Inter;">GWS</div>
+    <img style="width: 73px; height: 57px; left: 1030px; top: 401px; position: absolute" src="{% static 'images/orange light bulb.png' %}" />
+
+    <!-- Candidate 3 -->
+    <div style="width: 1156px; height: 85px; left: 149px; top: 593px; position: absolute; background: white"></div>
+    <input type="radio" name="candidate" value="Matthew Gibbs from People" onchange="updateSelectedCandidate()" style="position: absolute; left: 160px; top: 622px; z-index: 10;" />
+    <div style="left: 251px; top: 611px; position: absolute; color: black; font-size: 36px; font-family: Inter;">Matthew Gibbs</div>
+    <div style="left: 672px; top: 611px; position: absolute; color: black; font-size: 36px; font-family: Inter;">People</div>
+    <img style="width: 73px; height: 57px; left: 1030px; top: 617px; position: absolute" src="{% static 'images/Corporate employees celebrating successful teamwork.png' %}" />
+
+    <!-- Checkbox -->
+    <input type="checkbox" id="confirmCheckbox" onchange="toggleSubmit()" style="position: absolute; left: 191px; top: 751px; width: 30px; height: 30px; z-index: 10;" />
+
+    <!-- Statement -->
+    <div id="selectedStatement" style="left: 251px; top: 741px; position: absolute; color: white; font-size: 30px; font-family: Inter;">
+        I have selected ________ as my candidate.
+    </div>
+
+    <!-- Hidden voter ID -->
+    <input type="hidden" id="voterId" value="{{ voter_id }}">
+
+    <!-- Submit Button -->
+    <button id="submitButton" disabled onclick="submitVote()" style="width: 216px; height: 72px; left: 581px; top: 843px; position: absolute; background: #3964F1; border: none; color: white; font-size: 36px; font-family: Inter; cursor: not-allowed;">
+        SUBMIT
+    </button>
+</div>
+
+<!-- Popup Message -->
+<div class="popup-overlay" id="popup">
+    <div class="popup-content">
+        <h2>✅ Vote Submitted!</h2>
+        <p>Thank you for voting. Redirecting you to the home page.</p>
+        <button onclick="window.location.href='/'">OK</button>
+    </div>
+</div>
+
+
+<script>
+    function updateSelectedCandidate() {
+        const radios = document.getElementsByName('candidate');
+        let selected = "";
+        for (const radio of radios) {
+            if (radio.checked) {
+                selected = radio.value;
+                break;
+            }
+        }
+        const statement = document.getElementById("selectedStatement");
+        statement.textContent = `I have selected ${selected} as my candidate.`;
+    }
+
+    function toggleSubmit() {
+        const checkbox = document.getElementById("confirmCheckbox");
+        const button = document.getElementById("submitButton");
+        if (checkbox.checked) {
+            button.disabled = false;
+            button.style.cursor = "pointer";
+            button.style.opacity = "1";
+        } else {
+            button.disabled = true;
+            button.style.cursor = "not-allowed";
+            button.style.opacity = "0.6";
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function submitVote() {
+    const radios = document.getElementsByName('candidate');
+    let selected = "";
+    for (const radio of radios) {
+        if (radio.checked) {
+            selected = radio.value;
+            break;
+        }
+    }
+
+    fetch('/cast-vote/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: `candidate=${encodeURIComponent(selected)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("popup").style.display = "block";
+        } else {
+            alert("Error: " + data.error);
+        }
+    });
+}
+
+</script>
+</body>
+</html>

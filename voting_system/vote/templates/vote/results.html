@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Vote Count</title>
+    <style>
+        body { background-color: #06040D; color: white; font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+        h1 { font-size: 48px; margin-bottom: 20px; }
+        #results { font-size: 28px; }
+        .back-button {
+            margin-top: 30px;
+            background-color: #3964F1;
+            color: white;
+            padding: 12px 24px;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🗳️ Live Vote Results</h1>
+    <div id="results">Loading...</div>
+    <button class="back-button" onclick="window.location.href='/'">Back to Home</button>
+
+    <script>
+        function fetchVoteCounts() {
+            fetch('/vote-counts/')
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    if (data.length === 0) {
+                        resultsDiv.innerHTML = '<p>No votes yet.</p>';
+                    } else {
+                        data.forEach(item => {
+                            resultsDiv.innerHTML += `<p><strong>${item.candidate}</strong>: ${item.count} votes</p>`;
+                        });
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('results').innerHTML = 'Error loading results.';
+                });
+        }
+
+        // Refresh every 5 seconds
+        fetchVoteCounts();
+        setInterval(fetchVoteCounts, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Election Results</h1>
+
+{% if results %}
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidate, count in results.items %}
+            <tr>
+                <td>{{ candidate }}</td>
+                <td>{{ count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No votes have been decrypted yet or fewer than 3 signatures exist for each vote.</p>
+{% endif %}
+
+<a href="/admin/">Back to Admin</a>
+{% endblock %}
