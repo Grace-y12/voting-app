@@ -12,19 +12,33 @@ A secure web-based voting system built with Django that uses RSA encryption and 
 
 ##  📂 Project Structure
 voting_app/
+
 ├── vote/ # Main Django app
+
 │ ├── templates/ # HTML templates
+
 │ ├── static/ # CSS, JS files
+
 │ ├── views.py # Application logic
+
 │ ├── models.py # Database models
+
 │ ├── forms.py # Login & registration forms
+
 │ └── urls.py # App URLs
+
 ├── voting_system/ # Django project settings
+
 │ ├── settings.py
+
 │ ├── urls.py
+
 │ └── wsgi.py
+
 ├── db.sqlite3 # SQLite database
+
 ├── manage.py # Django management script
+
 └── requirements.txt # Python dependencies
 
 ## ⚙️ Installation
