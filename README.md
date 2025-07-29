@@ -28,14 +28,12 @@ voting_app/
 └── requirements.txt # Python dependencies
 
 ## ⚙️ Installation
-
+ ```bash
  1. Clone the Repository
-```bash
 git clone https://github.com/Grace-y12/voting-app.git
 cd voting-app
 
-  2. Create a Virtual Environment
-```bash  
+  2. Create a Virtual Environment 
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
@@ -56,6 +54,7 @@ Go to http://127.0.0.1:8000/ in your browser.
 Committee members must log in using their username and RSA key pair. Access to the admin dashboard is only granted when all three members have successfully authenticated.
 ```
 ## 📌 Technologies Used
+
 1. Django (Python)
 
 2.SQLite
@@ -68,5 +67,7 @@ Committee members must log in using their username and RSA key pair. Access to t
 
 ## 🧑‍💻 Developer
 Grace Chundu
+
 Computer Engineering Graduate | Cybersecurity & AI Enthusiast
+
 www.linkedin.com/in/grace-chundu
